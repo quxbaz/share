@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change Gear Chart — 5100 Mini Lathe</title>
+<style>
+  @page { size: letter portrait; margin: 0.45in; }
+
+  :root {
+    --ink: #1a1a1a;
+    --muted: #6b6b6b;
+    --rule: #c8c8c8;
+    --band: #f1f1ef;
+    --three: #fbf6e6;
+    --accent: #1f4e79;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    margin: 0;
+    background: #e6e6e3;
+    color: var(--ink);
+    font: 10pt/1.35 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sheet {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 0.4in auto;
+    padding: 0.45in;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0,0,0,.18);
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 4pt;
+    margin-bottom: 10pt;
+  }
+  h1 { font-size: 17pt; margin: 0; letter-spacing: .01em; }
+  header .sub { color: var(--muted); font-size: 9pt; text-align: right; }
+
+  .tables {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3in;
+    align-items: stretch;
+    flex: 1;
+  }
+
+  h2 {
+    font-size: 11pt;
+    margin: 0 0 4pt;
+    color: var(--accent);
+  }
+  h2 small { font-weight: normal; color: var(--muted); font-size: 8.5pt; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  thead th {
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border: 0.5px solid var(--rule);
+    background: var(--band);
+    padding: 3pt 2pt;
+    vertical-align: bottom;
+  }
+  thead th.pos { font-size: 11pt; letter-spacing: 0; }
+  tbody tr { height: 13.5pt; }
+  tbody th, tbody td {
+    padding: 0 2pt;
+    line-height: 1;
+    vertical-align: middle;
+    border: 0.5px solid var(--rule);
+  }
+  tbody th {
+    background: var(--band);
+    font-size: 10.5pt;
+    text-align: right;
+    padding-right: 10pt;
+  }
+  tbody td { font-size: 10.5pt; background: #fff; }
+  tbody tr.three td.any {
+    color: #9a9a9a;
+    font-size: 8.5pt;
+  }
+  tbody tr.three td.any span { font-size: 7.5pt; }
+  td.act {
+    font-size: 8pt;
+    color: var(--muted);
+    text-align: right;
+    padding-right: 4pt;
+  }
+  thead th.act { text-align: right; padding-right: 4pt; font-size: 7.5pt; }
+  .tnote { margin: 4pt 0 0; font-size: 8pt; color: var(--muted); }
+  .tnote .larr { font-size: 13pt; line-height: 0; color: var(--ink); position: relative; top: -1pt; margin-right: 2pt; }
+  th sup { position: absolute; font-size: 7pt; line-height: 1; margin: -1pt 0 0 1pt; }
+  table.metric th.act { width: 1%; white-space: nowrap; padding-left: 4pt; }
+  table.un thead th:first-child { width: 1%; white-space: nowrap; padding: 3pt 8pt; }
+  table.un tbody th { padding-left: 12pt; padding-right: 8pt; }
+
+  .tables section { display: flex; flex-direction: column; }
+  .side { margin-top: 14pt; font-size: 8.5pt; line-height: 1.4; }
+  .side p { margin: 0 0 8pt; }
+  .side h3, .notes h3 {
+    font-size: 9pt;
+    margin: 0 0 3pt;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .notes {
+    margin-top: 12pt;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3in;
+    font-size: 8.5pt;
+    line-height: 1.4;
+  }
+  .notes p, .notes ul { margin: 0 0 6pt; }
+  .positions { display: flex; gap: 10pt; align-items: flex-start; }
+  .positions ul { flex: 1; }
+  .gears { width: 1.55in; flex: none; margin-top: -2pt; }
+  .gears circle.back { fill: #e9eef4; }
+  .gears circle.front { fill: #fff; }
+  .gears circle.teeth { fill: none; stroke: #555; stroke-width: 3; }
+  .gears text {
+    font: bold 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    fill: var(--accent);
+    text-anchor: middle;
+    dominant-baseline: middle;
+  }
+  .gears text.cap {
+    font-weight: normal;
+    font-size: 8.5px;
+    fill: var(--muted);
+    text-anchor: start;
+  }
+  .side.box {
+    border: 0.75pt solid #9a9a9a;
+    border-radius: 3pt;
+    padding: 7pt 9pt 2pt;
+  }
+  .side.bottom { margin-top: auto; }
+  .notes ul, .side ul { padding-left: 12pt; margin: 0; }
+  .notes li, .side li { margin-bottom: 2pt; }
+
+  .train {
+    width: auto;
+    margin: 2pt 0 6pt;
+    font-size: 9.5pt;
+  }
+  .train th, .train td {
+    border: 0.5px solid var(--rule);
+    padding: 2pt 9pt;
+  }
+  .train th { background: var(--band); font-size: 8.5pt; }
+  .train th.lbl { text-align: left; font-weight: bold; }
+  .train td { background: #fff; }
+
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8.5pt; }
+
+
+  .print-btn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    font: inherit;
+    padding: 6px 14px;
+    border: 1px solid #999;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  @media print {
+    body { background: none; }
+    .sheet {
+      width: auto;
+      min-height: 0;
+      height: 10in;
+      margin: 0;
+      padding: 0;
+      box-shadow: none;
+    }
+    .print-btn { display: none; }
+    .tables section { break-inside: avoid; }
+  }
+
+  @media screen and (max-width: 8.8in) {
+    .sheet { width: auto; margin: 0; padding: 16px; min-height: 0; }
+    .tables, .notes { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Print</button>
+
+<main class="sheet">
+  <header>
+    <h1>Change Gear Chart</h1>
+    <div class="sub">5100 HiTorque Mini Lathe<br>16 TPI lead screw</div>
+  </header>
+
+  <div class="tables">
+    <section>
+      <h2>Unified Inch Threads <small>(UN)</small></h2>
+      <table class="un">
+        <thead>
+          <tr><th>TPI</th><th class="pos">A</th><th class="pos">B</th><th class="pos">C</th><th class="pos">D</th></tr>
+        </thead>
+        <tbody>
+        <tr class="three"><th scope="row">4</th><td>80</td><td class="any">any</td><td class="any">any</td><td>20</td></tr>
+        <tr><th scope="row">4.5</th><td>80</td><td>40</td><td>80</td><td>45</td></tr>
+        <tr><th scope="row">5</th><td>80</td><td>20</td><td>40</td><td>50</td></tr>
+        <tr><th scope="row">6</th><td>80</td><td>20</td><td>40</td><td>60</td></tr>
+        <tr class="three"><th scope="row">7</th><td>80</td><td class="any">any</td><td class="any">any</td><td>35</td></tr>
+        <tr class="three"><th scope="row">8</th><td>40</td><td class="any">any</td><td class="any">any</td><td>20</td></tr>
+        <tr class="three"><th scope="row">9</th><td>80</td><td class="any">any</td><td class="any">any</td><td>45</td></tr>
+        <tr class="three"><th scope="row">10</th><td>80</td><td class="any">any</td><td class="any">any</td><td>50</td></tr>
+        <tr class="three"><th scope="row">11</th><td>80</td><td class="any">any</td><td class="any">any</td><td>55</td></tr>
+        <tr><th scope="row">11.5<sup>*</sup></th><td>45</td><td>35</td><td>65</td><td>60</td></tr>
+        <tr class="three"><th scope="row">12</th><td>60</td><td class="any">any</td><td class="any">any</td><td>45</td></tr>
+        <tr class="three"><th scope="row">13</th><td>80</td><td class="any">any</td><td class="any">any</td><td>65</td></tr>
+        <tr class="three"><th scope="row">14</th><td>40</td><td class="any">any</td><td class="any">any</td><td>35</td></tr>
+        <tr class="three"><th scope="row">16</th><td>40</td><td class="any">any</td><td class="any">any</td><td>40</td></tr>
+        <tr class="three"><th scope="row">18</th><td>40</td><td class="any">any</td><td class="any">any</td><td>45</td></tr>
+        <tr class="three"><th scope="row">20</th><td>40</td><td class="any">any</td><td class="any">any</td><td>50</td></tr>
+        <tr><th scope="row">24</th><td>65</td><td>60</td><td>40</td><td>65</td></tr>
+        <tr><th scope="row">27</th><td>40</td><td>45</td><td>40</td><td>60</td></tr>
+        <tr class="three"><th scope="row">28</th><td>20</td><td class="any">any</td><td class="any">any</td><td>35</td></tr>
+        <tr class="three"><th scope="row">32</th><td>20</td><td class="any">any</td><td class="any">any</td><td>40</td></tr>
+        <tr class="three"><th scope="row">36</th><td>20</td><td class="any">any</td><td class="any">any</td><td>45</td></tr>
+        <tr class="three"><th scope="row">40</th><td>20</td><td class="any">any</td><td class="any">any</td><td>50</td></tr>
+        <tr class="three"><th scope="row">44</th><td>20</td><td class="any">any</td><td class="any">any</td><td>55</td></tr>
+        <tr><th scope="row">48</th><td>40</td><td>60</td><td>40</td><td>80</td></tr>
+        <tr><th scope="row">56</th><td>40</td><td>35</td><td>20</td><td>80</td></tr>
+        <tr class="three"><th scope="row">64</th><td>20</td><td class="any">any</td><td class="any">any</td><td>80</td></tr>
+        <tr><th scope="row">72</th><td>40</td><td>45</td><td>20</td><td>80</td></tr>
+        <tr><th scope="row">80</th><td>20</td><td>80</td><td>40</td><td>50</td></tr>
+        </tbody>
+      </table>
+      <div class="side box bottom">
+        <h3>Gear positions</h3>
+      <div class="positions">
+      <ul>
+        <li><b>A</b> is the first (top) change gear. It is driven from the spindle through internal headstock gears, not mounted on the spindle.</li>
+        <li><b>B</b> (inside) and <b>C</b> (outside) share the middle shaft. A drives B, and C drives D.</li>
+        <li><b>D</b> sits on the end of the lead screw.</li>
+        <li><b>any</b>: three-gear setup. Any gear in B meshes A with D without changing the ratio, and any gear in C is only a spacer. Move the D spacer outside the gear so D lines up with B.</li>
+      </ul>
+        <svg class="gears" viewBox="0 0 150 158" role="img" aria-label="Change gear positions A, B, C and D">
+          <!-- back plane: A meshes B -->
+          <circle class="back" cx="48" cy="30" r="20"/><circle class="teeth" cx="48" cy="30" r="20" stroke-dasharray="3.2 2.2"/>
+          <circle class="back" cx="62" cy="80" r="31"/><circle class="teeth" cx="62" cy="80" r="31" stroke-dasharray="3.2 2.2"/>
+          <!-- front plane: C (on B's shaft) meshes D -->
+          <circle class="front" cx="98" cy="108" r="30"/><circle class="teeth" cx="98" cy="108" r="30" stroke-dasharray="3.2 2.2"/>
+          <circle class="front" cx="62" cy="80" r="16"/><circle class="teeth" cx="62" cy="80" r="16" stroke-dasharray="3.2 2.2"/>
+          <text x="48" y="34">A</text>
+          <text x="40" y="88">B</text>
+          <text x="62" y="84">C</text>
+          <text x="98" y="112">D</text>
+          <text class="cap" x="72" y="20">driven via</text><text class="cap" x="72" y="30">headstock gears</text>
+          <text class="cap" x="96" y="152">lead screw</text>
+          <text class="cap" x="2" y="138">B behind C</text>
+        </svg>
+      </div>
+    </div>
+    </section>
+
+    <section>
+      <h2>Metric Threads <small>(pitch, mm)</small></h2>
+      <table class="metric">
+        <thead>
+          <tr><th>Pitch</th><th class="pos">A</th><th class="pos">B</th><th class="pos">C</th><th class="pos">D</th><th class="act">Actual</th><th class="act">Deviance</th></tr>
+        </thead>
+        <tbody>
+        <tr><th scope="row">0.3</th><td>20</td><td>57</td><td>35</td><td>65</td><td class="act">0.2999</td><td class="act dev">−0.02%</td></tr>
+        <tr><th scope="row">0.35</th><td>20</td><td>80</td><td>50</td><td>57</td><td class="act">0.3481</td><td class="act dev">−0.53%</td></tr>
+        <tr><th scope="row">0.4</th><td>20</td><td>55</td><td>45</td><td>65</td><td class="act">0.3997</td><td class="act dev">−0.09%</td></tr>
+        <tr><th scope="row">0.45</th><td>20</td><td>60</td><td>55</td><td>65</td><td class="act">0.4478</td><td class="act dev">−0.50%</td></tr>
+        <tr><th scope="row">0.5</th><td>21</td><td>50</td><td>45</td><td>60</td><td class="act">0.5001</td><td class="act dev">+0.01%</td></tr>
+        <tr><th scope="row">0.6</th><td>21</td><td>50</td><td>45</td><td>50</td><td class="act">0.6001</td><td class="act dev">+0.01%</td></tr>
+        <tr><th scope="row">0.7</th><td>35</td><td>55</td><td>45</td><td>65</td><td class="act">0.6994</td><td class="act dev">−0.09%</td></tr>
+        <tr><th scope="row">0.75</th><td>35</td><td>65</td><td>50</td><td>57</td><td class="act">0.7498</td><td class="act dev">−0.02%</td></tr>
+        <tr><th scope="row">0.8</th><td>40</td><td>65</td><td>45</td><td>55</td><td class="act">0.7993</td><td class="act dev">−0.09%</td></tr>
+        <tr><th scope="row">1</th><td>21</td><td>50</td><td>60</td><td>40</td><td class="act">1.0001</td><td class="act dev">+0.01%</td></tr>
+        <tr><th scope="row">1.25</th><td>35</td><td>40</td><td>45</td><td>50</td><td class="act">1.2502</td><td class="act dev">+0.01%</td></tr>
+        <tr><th scope="row">1.5</th><td>40</td><td>50</td><td>65</td><td>55</td><td class="act">1.5009</td><td class="act dev">+0.06%</td></tr>
+        <tr><th scope="row">1.75</th><td>40</td><td>35</td><td>55</td><td>57</td><td class="act">1.7506</td><td class="act dev">+0.04%</td></tr>
+        <tr><th scope="row">2</th><td>40</td><td>50</td><td>55</td><td>35</td><td class="act">1.9957</td><td class="act dev">−0.21%</td></tr>
+        <tr><th scope="row">2.5</th><td>60</td><td>55</td><td>65</td><td>45</td><td class="act">2.5015</td><td class="act dev">+0.06%</td></tr>
+        <tr><th scope="row">3</th><td>65</td><td>55</td><td>80</td><td>50</td><td class="act">3.0018</td><td class="act dev">+0.06%</td></tr>
+        <tr><th scope="row">3.5</th><td>65</td><td>21</td><td>57</td><td>80</td><td class="act">3.5010</td><td class="act dev">+0.03%</td></tr>
+        <tr><th scope="row">4</th><td>55</td><td>50</td><td>80</td><td>35</td><td class="act">3.9914</td><td class="act dev">−0.21%</td></tr>
+        <tr><th scope="row">4.5</th><td>55</td><td>21</td><td>65</td><td>60</td><td class="act">4.5042</td><td class="act dev">+0.09%</td></tr>
+        <tr><th scope="row">5</th><td>55</td><td>35</td><td>80</td><td>40</td><td class="act">4.9893</td><td class="act dev">−0.21%</td></tr>
+        <tr><th scope="row">5.5</th><td>50</td><td>55</td><td>80</td><td>21</td><td class="act">5.4978</td><td class="act dev">−0.04%</td></tr>
+        <tr><th scope="row">6</th><td>55</td><td>21</td><td>65</td><td>45</td><td class="act">6.0056</td><td class="act dev">+0.09%</td></tr>
+        <tr><th scope="row">8</th><td>57</td><td>21</td><td>65</td><td>35</td><td class="act">8.0023</td><td class="act dev">+0.03%</td></tr>
+        </tbody>
+      </table>
+      <p class="tnote"><span class="larr">&larr;</span> <sup>*</sup>11.5 TPI setup actually cuts 11.487 TPI (−0.11%).</p>
+      <div class="side box bottom">
+        <h3>Turning feeds (power feed)</h3>
+        <table class="train">
+          <tr><th class="lbl"></th><th>A</th><th>B</th><th>C</th><th>D</th><th>in/rev</th></tr>
+          <tr><th class="lbl">Normal</th><td>20</td><td>80</td><td>20</td><td>80</td><td>0.0039″</td></tr>
+          <tr><th class="lbl">Fine</th><td>20</td><td>80</td><td>15</td><td>90</td><td>0.0026″</td></tr>
+        </table>
+        <p>Normal is the factory setup. Put it back after threading. Fine gives a better finish and needs the LittleMachineShop #1137 set: an 80/15 compound gear for B–C and a 90 for D.</p>
+      </div>
+      <div class="side box">
+        <h3>Gear set</h3>
+        <p>20&nbsp;(2), 21, 30, 35, 40&nbsp;(2), 45, 50, 55, 57, 60, 65, 80&nbsp;(2). The 20s and 80s come installed.</p>
+        <h3>Ratios</h3>
+        <p>Four gears: <code>TPI = 16 × (B × D) / (A × C)</code><br>
+          Three gears: <code>TPI = 16 × D / A</code><br>
+          Feed per rev = 1 / TPI. Pitch (mm) = 25.4 / TPI, so metric pitches are approximate. <i>Actual</i> is what each setup cuts, and <i>Deviance</i> is how far that is from the nominal pitch.</p>
+      </div>
+    </section>
+  </div>
+
+</main>
+</body>
+</html>
